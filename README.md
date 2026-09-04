@@ -599,9 +599,3 @@ The current version has several limitations:
   
 ---
 
-
-## Author
-
-**Mini Data Analyzer**
-
-A Python project for learning CSV processing, statistics, command-line interfaces, error handling, and automated testing with `pytest`.
