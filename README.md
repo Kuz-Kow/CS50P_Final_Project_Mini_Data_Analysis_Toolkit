@@ -1,4 +1,4 @@
-# CS0P_Final_Project_Mini_Data_Analysis_Toolkit
+# CS50P_Final_Project_Mini_Data_Analysis_Toolkit
 
 # Mini Data Analyzer
 
