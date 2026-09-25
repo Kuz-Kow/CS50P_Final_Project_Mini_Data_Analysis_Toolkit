@@ -2,10 +2,16 @@ import sys
 from statistic_library import *
 import csv_handler
 import time
+from typing import Never
+from pathlib import Path
 
 
-
-def main():
+def main() -> Never:
+    '''
+    Error handling if not all arguments was provieded or to much arguments.
+    Calls menu if all arguments were provided
+    '''
+    
     if (len(sys.argv) < 2):
         sys.exit("Too few arguments. Add .csv file name")
     elif (len(sys.argv) > 2):
@@ -13,10 +19,17 @@ def main():
     else:
         menu(sys.argv[1])
 
-def menu(file_name):
-    data = csv_handler.load_csv(file_name)
+def menu(file_name : str) -> Never:
     
-    menu_fields = {
+    '''
+    Handles console menu and waits for user to choose menu field
+    And then sends it to do_operation function.
+    '''
+    
+    
+    data : dict[str, list[str]] = csv_handler.load_csv(Path(file_name))
+    
+    menu_fields : dict[str,int]= {
         "Mean" : 1,
         "Median" : 2,
         "Mode" : 3,
@@ -50,7 +63,14 @@ def menu(file_name):
             continue
         
 
-def do_operation(choice : int, data : dict) -> None:
+def do_operation(choice : int, data : dict[str, list[str]]) -> None:
+    
+    '''
+    Dooes choosen operation by calling
+    function from static_library.py and
+    prints result.
+    '''
+    
     
     if choice == 0:
         sys.exit()
@@ -80,7 +100,10 @@ def do_operation(choice : int, data : dict) -> None:
             choise_min_max(data, column)
                 
         case 6:
-            print(f"Frequence value: {frequency(column):0.2f}")
+            print("Frequence value:")
+            frequencies = frequency(column)
+            for key, value in frequencies.items():
+                print(f"{key} : {value:.2f}")
             
         case 7:
             print("Choose second colum")
@@ -95,7 +118,12 @@ def do_operation(choice : int, data : dict) -> None:
         case _:
             print("Unknown operation.")
             
-def choise_min_max(data, column):
+def choise_min_max(data : dict[str, list[str]], column : str):
+    
+    '''
+    Choosing operation max or min and prints result of the operation.
+    ''' 
+    
     choise = input("Min/Max? ")
             
     if choise.lower() == "min":
@@ -109,7 +137,11 @@ def choise_min_max(data, column):
         choise_min_max(data, column)
 
     
-def choose_column(data):
+def choose_column(data : dict[str, list[str]]) -> str:
+    '''
+    Writes columns name and waits on user to choose one.
+    '''
+    
     for i ,key in enumerate(data.keys()):
         print(f"{i+1}. {key}")
     
